@@ -232,6 +232,13 @@ DELIMITER ;
 ![](uk_stored_procedure.PNG)
 
 
+### Tools used:
+- MySQL database: Data storage and validation
+- SQL: for querying database and performing analysis
+- Power BI: Extract, Transform, and Load. Also, for performing exploratory analysis, dashboard creation, interactivity, and visual analysis.
+
+### Contact Information
+Email: luckyodeh001@gmail.com
 
 
 
