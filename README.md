@@ -51,3 +51,72 @@ JOIN fact_gross_price gp ON sm.product_code = gp.product_code
 GROUP BY c.customer, c.platform, c.channel
 ORDER BY total_revenue DESC;
 ```
+MySQL Result                          |                Visualization
+:------------------------------------:|:-----------------------------------:
+![](customer_platform.PNG)            |      ![](new_customer_platform.PNG)
+
+
+**Query 2:** **Total Revenue by Region**
+
+```sql
+SELECT 
+    c.region,
+    SUM(ROUND(sm.sold_quantity * gp.gross_price,2)) AS total_revenue
+FROM fact_sales_monthly sm
+JOIN dim_customer c ON sm.customer_code = c.customer_code
+JOIN fact_gross_price gp ON sm.product_code = gp.product_code
+GROUP BY c.region
+ORDER BY total_revenue DESC;
+
+```
+MySQL Result                          |                Visualization
+:------------------------------------:|:-----------------------------------:
+![](region.PNG)            |      ![](new_region.PNG)
+
+**Query 3:** **Total Revenue by Division, Segment and Product Category**
+
+```sql
+SELECT 
+    p.division,
+    p.segment,
+    p.category,
+    SUM(ROUND(sm.sold_quantity * gp.gross_price,2)) AS total_revenue
+FROM fact_sales_monthly sm
+JOIN dim_product p ON sm.product_code = p.product_code
+JOIN fact_gross_price gp ON sm.product_code = gp.product_code
+GROUP BY p.division, p.segment, p.category
+ORDER BY total_revenue DESC;
+
+```
+MySQL Result                          |                Visualization
+:------------------------------------:|:-----------------------------------:
+![](division_segment.PNG)            |      ![](new_division_segment.PNG)
+
+**Query 4:** **Top 5 Markets with Highest Revenue**
+
+```sql
+SELECT 
+	market,
+    total_revenue,
+    revenue_rank
+FROM (
+    SELECT 
+		c.market,
+        SUM(ROUND(sm.sold_quantity * gp.gross_price,2)) AS total_revenue,
+        RANK() OVER (ORDER BY SUM(sm.sold_quantity * gp.gross_price) DESC) AS revenue_rank
+    FROM fact_sales_monthly sm
+    JOIN dim_customer c ON sm.customer_code = c.customer_code
+    JOIN fact_gross_price gp ON sm.product_code = gp.product_code
+    GROUP BY c.market
+) ranked_markets
+WHERE revenue_rank <= 5
+ORDER BY revenue_rank;
+
+```
+MySQL Result                          |                Visualization
+:------------------------------------:|:-----------------------------------:
+![](top_five_market.PNG)            |      ![](new_top_five_market.PNG)
+
+
+
+
