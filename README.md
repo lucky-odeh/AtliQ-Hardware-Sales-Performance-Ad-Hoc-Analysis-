@@ -9,8 +9,7 @@ The objective of this project is to leverage SQL for ad-hoc analysis to evaluate
 4. Which top five markets have generated the highest lifetime revenue?
 5. What is the impact of freight costs on revenue across different markets?
 6. Who are our highest-value customers based on total revenue generated?
-7. Which products deliver the highest gross margin?
-8. What is the average selling price (ASP) across all markets?
+7. What is the average selling price (ASP) across all markets?
 
 ## Data Collection
 The dataset for this analysis comprises over **500,000** records, covering the period from **2017 to 2021**. It includes the following key tables stored in a MySQL database:
